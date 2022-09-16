@@ -9,9 +9,9 @@ from network import Network
 from graph import Graph
 
 def main():
-    inputWidth = 10
+    inputWidth = 10 # Specify the range of inputs to classify
     inputHeight = 10
-    res = 50 
+    res = 25 # Resolution of graph
     net = Network(1, 0, 0, 0, 0, 0) # If these are all set to 0, then the graph will not show correctly
     graph = Graph(net, inputWidth, inputHeight, res) 
     graph.show()

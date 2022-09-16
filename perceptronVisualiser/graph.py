@@ -78,13 +78,11 @@ class Graph:
         self.updateGraph()
 
     # Generate array of classification data using network
-    def generateData(self):
-        self.data = np.empty((self.res, self.res))
-        for x in range(self.res):
-            for y in range(self.res):
-                pixel = self.net.Classify(self.inputWidth * (x / self.res), self.inputHeight * (y / self.res))
-                self.data[y][x] = pixel
-
+    def generateData(self): 
+        self.data = np.fromfunction(np.vectorize(
+            lambda x, y: self.net.Classify(self.inputWidth * (x / self.res), self.inputHeight * (y / self.res))
+        ), (self.res, self.res))
+        
     def updateGraph(self):
         self.generateData()
         self.plot.set_data(self.data)
