@@ -12,7 +12,7 @@ class Graph:
         self.plot = plt.figure()
         self.plot.add_axes()
         self.plot = plt.imshow(
-            self.data, cmap='Blues', interpolation='nearest', origin='lower', extent = [0, inputWidth, 0, inputHeight])
+            self.data, cmap='Blues', interpolation='antialiased', origin='lower', extent = [0, inputWidth, 0, inputHeight])
         self.createSliders()
         
     # These sliders exist to help visualise how changes to weights and biases affect the output of the perceptron
@@ -79,9 +79,11 @@ class Graph:
 
     # Generate array of classification data using network
     def generateData(self): 
-        self.data = np.fromfunction(np.vectorize(
-            lambda x, y: self.net.Classify(self.inputWidth * (x / self.res), self.inputHeight * (y / self.res))
-        ), (self.res, self.res))
+        self.data = np.fromfunction(
+            np.vectorize(lambda x, y: self.net.Classify(
+                self.inputWidth * (x / self.res), 
+                self.inputHeight * (y / self.res), f = self.net.sigmoid)), 
+            (self.res, self.res))
         
     def updateGraph(self):
         self.generateData()
